@@ -1,0 +1,8 @@
+#!/bin/sh -e
+
+port=3333
+
+PORT=$port \
+SECRET=secret \
+AUDIENCE=http://localhost:$port \
+node index.js

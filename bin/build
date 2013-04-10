@@ -1,0 +1,20 @@
+#!/bin/sh -e
+
+uglifyjs \
+  public/js/vendor/jquery.js \
+  public/js/vendor/underscore.js \
+  public/js/vendor/backbone.js \
+  public/js/vendor/bootstrap.js \
+  > public/js/vendor.min.js
+
+r.js -o \
+  baseUrl=public/js \
+  name=vendor/almond \
+  include=app \
+  out=public/js/home.min.js
+
+printf "%s\n\n%s\n\n%s" \
+  "$(cat public/css/bootstrap.css)" \
+  "$(cat public/css/bootstrap-responsive.css)" \
+  "$(cat public/css/font-awesome.css)" \
+  | lessc -x - > public/css/app.min.css
