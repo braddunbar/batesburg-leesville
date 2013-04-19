@@ -26,8 +26,8 @@
           <li><a href='/'>Churches</a></li>
         </ul>
         <ul class='nav pull-right'>
-          <% if (this.req.session.email) { %>
-            <li><a><%- this.req.session.email %></a></li>
+          <% if (this.user) { %>
+            <li><a><%- this.user.email %></a></li>
             <li><a href='#' data-signout>Sign Out</a></li>
           <% } else { %>
             <li><a href='#' data-signin>Sign In</a></li>
@@ -60,10 +60,10 @@
 
   <script>
     require(['app'], function(App) {
-      var data = <%= this.escapeJs(JSON.stringify({
-        email: this.req.session.email || null
-      })) %>;
-      new App({el: 'body', email: data.email}).render();
+      new App({
+        el: 'body',
+        email: <%= this.stringify(this.user && this.user.email || null) %>
+      }).render();
     });
   </script>
 </body>

@@ -16,6 +16,7 @@ app.configure(function() {
   app.use(express.cookieParser(process.env.SECRET));
   app.use(express.cookieSession());
   app.use(require('./helpers'));
+  app.use(require('./helpers/user'));
 });
 
 app.get('/', function(req, res) {

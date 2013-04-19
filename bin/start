@@ -5,4 +5,5 @@ port=3333
 PORT=$port \
 SECRET=secret \
 AUDIENCE=http://localhost:$port \
+DB='tcp://brad@localhost/bl' \
 node index.js
