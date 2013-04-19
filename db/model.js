@@ -13,10 +13,11 @@ module.exports = function(config) {
   var table = Model.table = Model.prototype.table = sql.define(config);
 
   Model.query = function(query, next) {
-    if (query.toQuery) query = query.toQuery();
 
     pg.connect(DB, function(e, client, done) {
       if (e) return next(e);
+
+      query = query.toQuery();
       client.query(query.text, query.values, function(e, result) {
         done();
         if (e) return next(e);
