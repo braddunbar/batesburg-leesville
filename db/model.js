@@ -28,16 +28,41 @@ module.exports = function(config) {
     });
   };
 
-  // findByColumn
+  // Column-specific helpers.
+
   table.columns.forEach(function(column) {
     var name = column.name;
-    var method = 'findBy' + name[0].toUpperCase() + name.slice(1);
+    var Name = name[0].toUpperCase() + name.slice(1);
 
-    Model[method] = function(value, next) {
+    // findBy
+
+    Model['findBy' + Name] = function(value, next) {
       var q = table.where(table[name].equals(value));
       Model.query(q, function(e, models) {
         if (e) return next(e);
         next(null, models[0]);
+      });
+    };
+
+    // findOrCreateBy
+
+    Model['findOrCreateBy' + Name] = function(value, next) {
+      var q = table.where(table[name].equals(value));
+      Model.query(q, function(e, models) {
+        if (e) return next(e);
+
+        // If model exists, return it.
+        if (models[0]) return next(null, models[0]);
+
+        // If not, insert it.
+        var values = {};
+        values[name] = value;
+        var insert = table.insert(values).returning(table.star());
+
+        Model.query(insert, function(e, models) {
+          if (e) return next(e);
+          next(null, models[0]);
+        });
       });
     };
   });
