@@ -1,0 +1,8 @@
+#!/usr/bin/env node
+
+process.env.DB = 'tcp://brad@localhost/bl';
+
+User = require('../db/user');
+Entity = require('../db/entity');
+
+require('repl').start({useGlobal: true});

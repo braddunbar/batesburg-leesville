@@ -28,6 +28,32 @@ module.exports = function(config) {
     });
   };
 
+  var columnNames = _.pluck(table.columns, 'name');
+
+  // Save a model
+  Model.prototype.save = function(next) {
+    var values = _.omit(_.pick(this, columnNames), 'id');
+
+    // Update if we already have an id.
+    if (this.id) {
+      var q = table.update(values)
+        .where({id: this.id})
+        .returning(table.star());
+    }
+
+    // Otherwise, insert.
+    else {
+      var q = table.insert(values).returning(table.star());
+    }
+
+    var model = this;
+    Model.query(q, function(e, models) {
+      if (e) return next(e);
+      _.extend(model, _.pick(models[0], columnNames));
+      next(null);
+    });
+  };
+
   // Column-specific helpers.
 
   table.columns.forEach(function(column) {
@@ -66,6 +92,9 @@ module.exports = function(config) {
       });
     };
   });
+
+  // Alias findById as find
+  Model.find = Model.findById;
 
   return Model;
 

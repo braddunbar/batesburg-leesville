@@ -21,10 +21,10 @@ module.exports = function(app) {
   // Verify an assertion.
   app.post('/signin', function(req, res) {
     verify(req.param('assertion'), function(e, result) {
-      if (e) return res.end(500);
+      if (e) return res.status(500).end(e);
 
       // Bail if authentication fails.
-      if (result.status !== 'okay') return res.end(401);
+      if (result.status !== 'okay') return res.status(401).end();
 
       // Set some session data and finish up.
       req.session.email = result.email;

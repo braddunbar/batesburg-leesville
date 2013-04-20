@@ -26,4 +26,7 @@ app.get('/', function(req, res) {
 // Authentication
 require('./auth')(app);
 
+// Entities
+require('./entities')(app);
+
 app.listen(process.env.PORT);

@@ -1,0 +1,49 @@
+#!/bin/sh
+
+# Connection String
+db=bl
+
+# Generate a new migration.
+if [ "$1" = "new" ]; then
+  name="db/migrate/$(date +%F-%H-%M-%S)-$2.sql"
+  touch "$name"
+  printf "$name\n"
+  exit
+fi
+
+# Create versions table
+psql -q $db 2> /dev/null <<SQL
+  create table if not exists versions (
+    id varchar(250) primary key
+  );
+SQL
+
+# Run migrations
+
+for migration in db/migrate/*.sql; do
+
+  # Extract the migration id from the filename.
+  id="${migration%.sql}"
+  id="${id#db/migrate/}"
+  count="select count(*) from versions where id = '$id';"
+
+  # Run the migration if it isn't complete already.
+  if [ $(printf "%s" "$count" | psql $db -tA) == '0' ]; then
+
+    printf "\n$id\n\n"
+    psql $db <<SQL
+      begin;
+      $(cat $migration)
+      insert into versions (id) values ('$id');
+      commit;
+SQL
+
+    # Bail if a migration fails.
+    if [ $(printf "%s" "$count" | psql $db -tA) == '0' ]; then
+      printf "\nFAILURE: $id\n"
+      exit 1
+    fi
+
+  fi
+
+done
