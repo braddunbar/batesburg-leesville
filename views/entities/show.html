@@ -3,4 +3,13 @@
     <small>edit</small>
   </a>
 <% } %>
+
 <h1><%- this.entity.name %></h1>
+
+<% if (this.entity.phone) { %>
+  <p><%- this.entity.phone %></p>
+<% } %>
+
+<% if (this.entity.description) { %>
+  <p><%- this.entity.description %></p>
+<% } %>

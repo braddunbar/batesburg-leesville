@@ -4,6 +4,8 @@ var User = module.exports = require('./model')({
   columns: [
     'id',
     'name',
-    'owner_id'
+    'owner_id',
+    'description',
+    'phone'
   ]
 });

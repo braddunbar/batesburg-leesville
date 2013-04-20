@@ -1,10 +1,30 @@
-<form method='post' action='/entities/<%- this.entity.id %>'>
-  <fieldset>
-    <div>
-      <label for='name'>Name</label>
-      <input type='text' id='name' name='name' value='<%- this.entity.name %>'>
-    </div>
-    <button type='submit' class='btn'>Save</button>
-  </fieldset>
-</form>
+<form class='form-horizontal' method='post' action='/entities/<%- this.entity.id %>'>
 
+  <div class='control-group'>
+    <label class='control-label' for='name'>Name</label>
+    <div class='controls'>
+      <input required type='text' id='name' name='name' value='<%- this.entity.name %>' maxlength='50'>
+    </div>
+  </div>
+
+  <div class='control-group'>
+    <label class='control-label' for='phone'>Phone</label>
+    <div class='controls'>
+      <input type='tel' id='phone' name='phone' value='<%- this.entity.phone %>' maxlength='20'>
+    </div>
+  </div>
+
+  <div class='control-group'>
+    <label class='control-label' for='description'>Description</label>
+    <div class='controls'>
+      <textarea id='description' name='description' maxlength='5000'><%- this.entity.description %></textarea>
+    </div>
+  </div>
+
+  <div class='control-group'>
+    <div class='controls'>
+      <button type='submit' class='btn'>Save</button>
+    </div>
+  </div>
+
+</form>

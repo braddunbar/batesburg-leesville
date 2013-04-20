@@ -5,7 +5,8 @@ var _ = require('underscore');
 
 var findEntity = function(req, res, next) {
   Entity.find(req.param('id'), function(e, entity) {
-    if (e) return res.status(500).end(e);
+    if (e) return res.render('500', {error: e});
+    if (!entity) return res.render('404');
     req.entity = res.locals.entity = entity;
     next();
   });
@@ -33,7 +34,7 @@ module.exports = function(app) {
     });
 
     entity.save(function(e) {
-      if (e) return res.status(500).end(e);
+      if (e) return res.render('500', {error: e});
       res.redirect('/entities/' + entity.id);
     });
   });
@@ -45,11 +46,13 @@ module.exports = function(app) {
 
   app.post('/entities/:id', findEntity, mustOwn, function(req, res) {
     _.extend(req.entity, {
-      name: req.param('name')
+      name: req.param('name'),
+      phone: req.param('phone'),
+      description: req.param('description')
     });
 
     req.entity.save(function(e) {
-      if (e) return res.status(500).end(e);
+      if (e) return res.render('500', {error: e});
       res.redirect('/entities/' + req.entity.id);
     });
   });
