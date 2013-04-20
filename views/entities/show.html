@@ -1,1 +1,6 @@
+<% if (this.user && this.user.id === this.entity.owner_id) { %>
+  <a href='/entities/<%- this.entity.id %>/edit' class='pull-right'>
+    <small>edit</small>
+  </a>
+<% } %>
 <h1><%- this.entity.name %></h1>
