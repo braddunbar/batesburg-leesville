@@ -21,6 +21,15 @@ var mustOwn = function(req, res, next) {
 
 module.exports = function(app) {
 
+  // Index
+  app.get('/entities', function(req, res) {
+    var q = Entity.table.select(Entity.table.star());
+    Entity.query(q, function(e, entities) {
+      if (e) return res.render('500', {error: e});
+      res.render('entities/index', {entities: entities});
+    });
+  });
+
   // New
   app.get('/entities/new', mustAuth, function(req, res) {
     res.render('entities/new');
