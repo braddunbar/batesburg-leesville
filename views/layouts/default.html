@@ -22,12 +22,15 @@
       <div class='navbar-inner'>
         <a class='brand' href='/'>Batesburg-Leesville</a>
         <ul class='nav'>
-          <li class='active'><a href='/'>Restaurants</a></li>
-          <li><a href='/'>Churches</a></li>
+          <li class='<% if (this.req.url === '/entities/tagged/food') { %>active<% } %>'>
+            <a href='/entities/tagged/food'>Restaurants</a>
+          </li>
+          <li class='<% if (this.req.url === '/entities/tagged/church') { %>active<% } %>'>
+            <a href='/entities/tagged/church'>Churches</a>
+          </li>
         </ul>
         <ul class='nav pull-right'>
           <% if (this.user) { %>
-            <li><a><%- this.user.email %></a></li>
             <li><a href='#' data-signout>Sign Out</a></li>
           <% } else { %>
             <li><a href='#' data-signin>Sign In</a></li>

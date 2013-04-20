@@ -30,6 +30,15 @@ module.exports = function(app) {
     });
   });
 
+  // Tagged
+  app.get('/entities/tagged/:tag', function(req, res) {
+    var q = Entity.table.where("'" + req.param('tag') + "' = any(tags)");
+    Entity.query(q, function(e, entities) {
+      if (e) return res.render('500', {error: e});
+      res.render('entities/index', {entities: entities});
+    });
+  });
+
   // New
   app.get('/entities/new', mustAuth, function(req, res) {
     res.render('entities/new');
@@ -44,7 +53,7 @@ module.exports = function(app) {
 
     entity.save(function(e) {
       if (e) return res.render('500', {error: e});
-      res.redirect('/entities/' + entity.id);
+      res.redirect(entity.url());
     });
   });
 
@@ -57,17 +66,18 @@ module.exports = function(app) {
     _.extend(req.entity, {
       name: req.param('name'),
       phone: req.param('phone'),
-      description: req.param('description')
+      description: req.param('description'),
+      tags: req.param('tags').split(/[,\s]+/)
     });
 
     req.entity.save(function(e) {
       if (e) return res.render('500', {error: e});
-      res.redirect('/entities/' + req.entity.id);
+      res.redirect(req.entity.url());
     });
   });
 
   // Show
-  app.get('/entities/:id', findEntity, function(req, res) {
+  app.get('/entities/:id*', findEntity, function(req, res) {
     res.render('entities/show');
   });
 

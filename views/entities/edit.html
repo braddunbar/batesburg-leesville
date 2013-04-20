@@ -22,6 +22,13 @@
   </div>
 
   <div class='control-group'>
+    <label class='control-label' for='tags'>Tags</label>
+    <div class='controls'>
+      <input type='text' id='tags' name='tags' value='<%- this.entity.tags.join(', ') %>'>
+    </div>
+  </div>
+
+  <div class='control-group'>
     <div class='controls'>
       <button type='submit' class='btn'>Save</button>
     </div>

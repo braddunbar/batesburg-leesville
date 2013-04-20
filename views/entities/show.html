@@ -1,16 +1,30 @@
-<% if (this.user && this.user.id === this.entity.owner_id) { %>
-  <a href='/entities/<%- this.entity.id %>/edit' class='pull-right'>
-    <small>edit</small>
-  </a>
-<% } %>
 
 <h1><%- this.entity.name %></h1>
 
 <div class='row'>
   <div class='span4'>
-    <% if (this.entity.phone) { %>
-      <span class='muted'>Phone:</span>&nbsp;<%- this.entity.phone %>
+
+    <% if (this.user && this.user.id === this.entity.owner_id) { %>
+      <p>
+        <a href='/entities/<%- this.entity.id %>/edit'>
+          <small>edit</small>
+        </a>
+      </p>
     <% } %>
+
+    <% if (this.entity.phone) { %>
+      <p>
+        <span class='muted'>Phone:</span>&nbsp;<%- this.entity.phone %>
+      </p>
+    <% } %>
+
+    <p>
+      <% this.entity.tags.forEach(function(tag) { %>
+        <a class='label' href='/entities/tagged/<%- tag %>'>
+          <%- tag %>
+        </a>
+      <% }); %>
+    </p>
   </div>
   <div class='span8'>
     <% if (this.entity.description) { %>
