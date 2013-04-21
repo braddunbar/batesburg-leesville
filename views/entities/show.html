@@ -4,7 +4,7 @@
 <div class='row'>
   <div class='span4'>
 
-    <% if (this.user && this.user.id === this.entity.owner_id) { %>
+    <% if (this.user && this.user.can('edit', this.entity)) { %>
       <p>
         <a href='/entities/<%- this.entity.id %>/edit'>
           <small>edit</small>
@@ -25,6 +25,21 @@
         </a>
       <% }); %>
     </p>
+
+    <% if (this.entity.hasLocation()) { %>
+      <address>
+        <%- this.entity.street %><br>
+        <%- this.entity.city %> SC, <%- this.entity.zip %>
+      </address>
+      <p>
+        <% var address = encodeURIComponent(
+          this.entity.street + ', ' + this.entity.city + ',' + this.entity.state + ',' + this.entity.zip
+        ); %>
+        <a target='_blank' href='//maps.google.com?q=<%- address %>'>
+          <img src='//maps.googleapis.com/maps/api/staticmap?center=<%- address %>&zoom=14&size=200x200&sensor=false&markers=<%- address %>&key=AIzaSyDR2zIp1JgDZu2_6-2m-BWwB527h4aQR2M'>
+        </a>
+      </p>
+    <% } %>
   </div>
   <div class='span8'>
     <% if (this.entity.description) { %>

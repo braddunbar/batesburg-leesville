@@ -1,31 +1,64 @@
 <form class='form-horizontal' method='post' action='/entities/<%- this.entity.id %>'>
 
-  <div class='control-group'>
-    <label class='control-label' for='name'>Name</label>
-    <div class='controls'>
-      <input required type='text' id='name' name='name' value='<%- this.entity.name %>' maxlength='50'>
-    </div>
-  </div>
+  <div class='row'>
 
-  <div class='control-group'>
-    <label class='control-label' for='phone'>Phone</label>
-    <div class='controls'>
-      <input type='tel' id='phone' name='phone' value='<%- this.entity.phone %>' maxlength='20'>
-    </div>
-  </div>
+    <div class='span6'>
 
-  <div class='control-group'>
-    <label class='control-label' for='description'>Description</label>
-    <div class='controls'>
-      <textarea id='description' name='description' maxlength='5000'><%- this.entity.description %></textarea>
-    </div>
-  </div>
+      <div class='control-group'>
+        <label class='control-label' for='name'>Name</label>
+        <div class='controls'>
+          <input required type='text' id='name' name='name' value='<%- this.entity.name %>' maxlength='50'>
+        </div>
+      </div>
 
-  <div class='control-group'>
-    <label class='control-label' for='tags'>Tags</label>
-    <div class='controls'>
-      <input type='text' id='tags' name='tags' value='<%- this.entity.tags.join(', ') %>'>
+      <div class='control-group'>
+        <label class='control-label' for='phone'>Phone</label>
+        <div class='controls'>
+          <input type='tel' id='phone' name='phone' value='<%- this.entity.phone %>' maxlength='20'>
+        </div>
+      </div>
+
+      <div class='control-group'>
+        <label class='control-label' for='description'>Description</label>
+        <div class='controls'>
+          <textarea id='description' name='description' maxlength='5000'><%- this.entity.description %></textarea>
+        </div>
+      </div>
+
+      <div class='control-group'>
+        <label class='control-label' for='tags'>Tags</label>
+        <div class='controls'>
+          <input type='text' id='tags' name='tags' value='<%- this.entity.tags.join(', ') %>'>
+        </div>
+      </div>
+
     </div>
+
+    <div class='span6'>
+
+      <div class='control-group'>
+        <label class='control-label' for='street'>Street</label>
+        <div class='controls'>
+          <input type='text' id='street' name='street' value='<%- this.entity.street %>' maxlength='250'>
+        </div>
+      </div>
+
+      <div class='control-group'>
+        <label class='control-label' for='city'>City</label>
+        <div class='controls'>
+          <input type='text' id='city' name='city' value='<%- this.entity.city %>' maxlength='100'>
+        </div>
+      </div>
+
+      <div class='control-group'>
+        <label class='control-label' for='zip'>Zip</label>
+        <div class='controls'>
+          <input type='text' id='zip' name='zip' value='<%- this.entity.zip %>' maxlength='10'>
+        </div>
+      </div>
+
+    </div>
+
   </div>
 
   <div class='control-group'>

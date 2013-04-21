@@ -4,7 +4,7 @@ var Entity = require('./db/entity');
 var _ = require('underscore');
 
 var findEntity = function(req, res, next) {
-  Entity.find(req.param('id'), function(e, entity) {
+  Entity.find(req.params.id, function(e, entity) {
     if (e) return res.render('500', {error: e});
     if (!entity) return res.render('404');
     req.entity = res.locals.entity = entity;
@@ -32,7 +32,7 @@ module.exports = function(app) {
 
   // Tagged
   app.get('/entities/tagged/:tag', function(req, res) {
-    var q = Entity.table.where("'" + req.param('tag') + "' = any(tags)");
+    var q = Entity.table.where("'" + req.params.tag + "' = any(tags)");
     Entity.query(q, function(e, entities) {
       if (e) return res.render('500', {error: e});
       res.render('entities/index', {entities: entities});
@@ -47,7 +47,7 @@ module.exports = function(app) {
   // Create
   app.post('/entities', mustAuth, function(req, res) {
     var entity = new Entity({
-      name: req.param('name'),
+      name: req.body.name,
       owner_id: req.user.id
     });
 
@@ -63,12 +63,10 @@ module.exports = function(app) {
   });
 
   app.post('/entities/:id', findEntity, canEdit, function(req, res) {
-    _.extend(req.entity, {
-      name: req.param('name'),
-      phone: req.param('phone'),
-      description: req.param('description'),
-      tags: req.param('tags').split(/[,\s]+/)
-    });
+    _.extend(req.entity, _.pick(req.body,
+      'name', 'phone', 'street', 'city', 'zip', 'description'
+    ));
+    req.entity.tags = req.body.tags.split(/[,\s]+/);
 
     req.entity.save(function(e) {
       if (e) return res.render('500', {error: e});
