@@ -6,7 +6,7 @@
 
   <meta http-equiv='X-UA-Compatible' content='IE=Edge'>
 
-  <% if (process.env.NODE_ENV === 'production') { %>
+  <% if (this.settings.env === 'production') { %>
     <link rel='stylesheet' href='/css/app.min.css'>
   <% } else { %>
     <link rel='stylesheet' href='/css/bootstrap.css'>
@@ -44,7 +44,7 @@
 
   <script src='https://login.persona.org/include.js'></script>
 
-  <% if (process.env.NODE_ENV === 'production') { %>
+  <% if (this.settings.env === 'production') { %>
     <script src='/js/vendor.min.js'></script>
     <script src='/js/home.min.js'></script>
   <% } else { %>
