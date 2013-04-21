@@ -12,9 +12,9 @@ var findEntity = function(req, res, next) {
   });
 };
 
-var mustOwn = function(req, res, next) {
-  if (!req.user || !req.entity || req.user.id !== req.entity.owner_id) {
-    return res.status(401).end();
+var canEdit = function(req, res, next) {
+  if (!req.user || !req.user.can('edit', req.entity)) {
+    return res.render('401');
   }
   next();
 };
@@ -58,11 +58,11 @@ module.exports = function(app) {
   });
 
   // Edit
-  app.get('/entities/:id/edit', findEntity, mustOwn, function(req, res) {
+  app.get('/entities/:id/edit', findEntity, canEdit, function(req, res) {
     res.render('entities/edit');
   });
 
-  app.post('/entities/:id', findEntity, mustOwn, function(req, res) {
+  app.post('/entities/:id', findEntity, canEdit, function(req, res) {
     _.extend(req.entity, {
       name: req.param('name'),
       phone: req.param('phone'),

@@ -1,5 +1,5 @@
 
 module.exports = function(req, res, next) {
-  if (req.user) return next();
-  res.status(401).end();
+  if (!req.user) return res.render('401');
+  next();
 };
