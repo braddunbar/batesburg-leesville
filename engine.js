@@ -6,7 +6,11 @@ var _ = require('underscore');
 var compile = function(path, next) {
   fs.readFile(path, function(e, data) {
     if (e) return next(e);
-    next(null, _.template(data.toString(), null, {variable: 'o'}));
+    try {
+      next(null, _.template(data.toString(), null, {variable: 'o'}));
+    } catch (e) {
+      next(e);
+    }
   });
 };
 
@@ -37,10 +41,9 @@ module.exports = function(path, options, next) {
       var html = template.call(options);
       options.content = html;
       if (layout) html = layout.call(options);
+      next(null, html);
     } catch(e) {
-      return next(e);
+      next(e);
     }
-
-    next(null, html);
   });
 };
