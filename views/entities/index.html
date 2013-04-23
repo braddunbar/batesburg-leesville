@@ -1,3 +1,27 @@
 <% this.entities.forEach(function(entity) { %>
-  <p><a href='<%- entity.url() %>'><%- entity.name %></a></p>
+  <span class='muted pull-right'>
+
+    <% if (entity.hasLocation()) { %>
+      <span><%- entity.street %>, <%- entity.city %> <%- entity.state %>, <%- entity.zip %></span>
+    <% } %>
+
+    <% if (entity.hasLocation() && entity.phone) { %>
+      &mdash;
+    <% } %>
+
+    <% if (entity.phone) { %>
+      <span><%- entity.phone %></span>
+    <% } %>
+
+  </span>
+  <h4>
+    <a href='<%- entity.url() %>'><%- entity.name %></a>
+  </h4>
+  <p>
+    <% entity.tags.forEach(function(tag) { %>
+      <a class='label' href='/entities/tagged/<%- tag %>'><%- tag %></a>
+    <% }); %>
+  </p>
+  <p><%- entity.description %></p>
+  <hr>
 <% }); %>
