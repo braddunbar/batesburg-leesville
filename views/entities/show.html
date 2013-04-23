@@ -1,22 +1,19 @@
 
-<h1><%- this.entity.name %></h1>
+<% if (this.user && this.user.can('edit', this.entity)) { %>
+  <p class='pull-right'>
+    <a class='btn' href='/entities/<%- this.entity.id %>/edit'>
+      <i class='icon-pencil'></i>
+      Edit
+    </a>
+  </p>
+<% } %>
+
+<h1>
+  <a href='<%- this.entity.url() %>'><%- this.entity.name %></a>
+</h1>
 
 <div class='row'>
   <div class='span4'>
-
-    <% if (this.user && this.user.can('edit', this.entity)) { %>
-      <p>
-        <a href='/entities/<%- this.entity.id %>/edit'>
-          <small>edit</small>
-        </a>
-      </p>
-    <% } %>
-
-    <% if (this.entity.phone) { %>
-      <p>
-        <span class='muted'>Phone:</span>&nbsp;<%- this.entity.phone %>
-      </p>
-    <% } %>
 
     <p>
       <% this.entity.tags.forEach(function(tag) { %>
@@ -26,17 +23,23 @@
       <% }); %>
     </p>
 
+    <% if (this.entity.phone) { %>
+      <p>
+        <i class='icon-phone'></i>&nbsp;<%- this.entity.phone %>
+      </p>
+    <% } %>
+
     <% if (this.entity.hasLocation()) { %>
       <address>
-        <%- this.entity.street %><br>
-        <%- this.entity.city %> SC, <%- this.entity.zip %>
+        <i class='icon-home'></i>&nbsp;<%- this.entity.street %><br>
+        <%- this.entity.city %> <%- this.entity.state %>, <%- this.entity.zip %>
       </address>
       <p>
         <% var address = encodeURIComponent(
           this.entity.street + ', ' + this.entity.city + ',' + this.entity.state + ',' + this.entity.zip
         ); %>
         <a target='_blank' href='//maps.google.com?q=<%- address %>'>
-          <img src='//maps.googleapis.com/maps/api/staticmap?center=<%- address %>&zoom=14&size=200x200&sensor=false&markers=<%- address %>&key=AIzaSyDR2zIp1JgDZu2_6-2m-BWwB527h4aQR2M'>
+          <img class='img-rounded' src='//maps.googleapis.com/maps/api/staticmap?center=<%- address %>&zoom=14&size=200x200&sensor=false&markers=<%- address %>&key=AIzaSyDR2zIp1JgDZu2_6-2m-BWwB527h4aQR2M'>
         </a>
       </p>
     <% } %>
