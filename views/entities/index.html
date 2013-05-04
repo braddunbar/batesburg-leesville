@@ -1,27 +1,29 @@
-<% this.entities.forEach(function(entity) { %>
-  <span class='muted pull-right'>
+<div class='container pam'>
+  <% this.entities.forEach(function(entity) { %>
+    <span class='muted pull-right'>
 
-    <% if (entity.hasLocation()) { %>
-      <span><%- entity.street %>, <%- entity.city %> <%- entity.state %>, <%- entity.zip %></span>
-    <% } %>
+      <% if (entity.hasLocation()) { %>
+        <span><%- entity.street %>, <%- entity.city %> <%- entity.state %>, <%- entity.zip %></span>
+      <% } %>
 
-    <% if (entity.hasLocation() && entity.phone) { %>
-      &mdash;
-    <% } %>
+      <% if (entity.hasLocation() && entity.phone) { %>
+        &mdash;
+      <% } %>
 
-    <% if (entity.phone) { %>
-      <span><%- entity.phone %></span>
-    <% } %>
+      <% if (entity.phone) { %>
+        <span><%- entity.phone %></span>
+      <% } %>
 
-  </span>
-  <h4>
-    <a href='<%- entity.url() %>'><%- entity.name %></a>
-  </h4>
-  <p>
-    <% entity.tags.forEach(function(tag) { %>
-      <a class='label' href='/entities/tagged/<%- tag %>'><%- tag %></a>
-    <% }); %>
-  </p>
-  <p><%- entity.description %></p>
-  <hr>
-<% }); %>
+    </span>
+    <h4>
+      <a href='<%- entity.url() %>'><%- entity.name %></a>
+    </h4>
+    <p>
+      <% entity.tags.forEach(function(tag) { %>
+        <a class='label' href='/entities/tagged/<%- tag %>'><%- tag %></a>
+      <% }); %>
+    </p>
+    <p><%- entity.description %></p>
+    <hr>
+  <% }); %>
+</div>

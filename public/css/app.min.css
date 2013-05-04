@@ -938,6 +938,9 @@ a.label:hover,a.label:focus,a.badge:hover,a.badge:focus{color:#ffffff;text-decor
 .show{display:block;}
 .invisible{visibility:hidden;}
 .affix{position:fixed;}
+body{padding:40px 0 0 0;}
+.pam{padding:10px;}
+.banner{min-width:100%;}
 .clearfix{*zoom:1;}
 .clearfix:before,.clearfix:after{display:table;line-height:0;content:"";}
 .clearfix:after{clear:both;}

@@ -13,8 +13,13 @@ r.js -o \
   include=app \
   out=public/js/home.min.js
 
-printf "%s\n\n%s\n\n%s" \
+printf "%s\n\n%s\n\n%s\n\n%s" \
   "$(cat public/css/bootstrap.css)" \
+  "$(cat public/css/app.css)" \
   "$(cat public/css/bootstrap-responsive.css)" \
   "$(cat public/css/font-awesome.css)" \
   | lessc -x - > public/css/app.min.css
+
+convert public/img/poultry-festival.jpg \
+  -strip -resize 1600x -crop x250+0+125 -quality 70 \
+  public/img/poultry-festival-banner.jpg

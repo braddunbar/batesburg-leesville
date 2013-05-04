@@ -9,6 +9,7 @@
   <% if (this.settings.env === 'production') { %>
 
     <link rel='stylesheet' href='/css/app.min.css'>
+    <script src='/js/vendor.min.js'></script>
 
     <script>
       var _gaq = _gaq || [];
@@ -22,17 +23,24 @@
     </script>
 
   <% } else { %>
+
     <link rel='stylesheet' href='/css/bootstrap.css'>
+    <link rel='stylesheet' href='/css/app.css'>
     <link rel='stylesheet' href='/css/bootstrap-responsive.css'>
     <link rel='stylesheet' href='/css/font-awesome.css'>
+    <script src='/js/vendor/jquery.js'></script>
+    <script src='/js/vendor/underscore.js'></script>
+    <script src='/js/vendor/backbone.js'></script>
+    <script src='/js/vendor/bootstrap.js'></script>
+
   <% } %>
 
 </head>
 <body>
-  <div class='container'>
 
-    <div class='navbar'>
-      <div class='navbar-inner'>
+  <div class='navbar navbar-inverse navbar-fixed-top'>
+    <div class='navbar-inner'>
+      <div class='container'>
         <a class='brand' href='/'>Batesburg-Leesville</a>
         <ul class='nav'>
           <li class='<% if (this.req.url === '/entities/tagged/food') { %>active<% } %>'>
@@ -54,20 +62,15 @@
         </ul>
       </div>
     </div>
-
-    <%= this.content %>
   </div>
+
+  <%= this.content %>
 
   <script src='https://login.persona.org/include.js'></script>
 
   <% if (this.settings.env === 'production') { %>
-    <script src='/js/vendor.min.js'></script>
     <script src='/js/home.min.js'></script>
   <% } else { %>
-    <script src='/js/vendor/jquery.js'></script>
-    <script src='/js/vendor/underscore.js'></script>
-    <script src='/js/vendor/backbone.js'></script>
-    <script src='/js/vendor/bootstrap.js'></script>
     <script src='/js/vendor/require.js'></script>
     <script>
       require.config({

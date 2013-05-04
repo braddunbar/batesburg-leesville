@@ -57,6 +57,14 @@ module.exports = function(app) {
     });
   });
 
+  // Photos
+
+  app.post('/entities/:id/photos/upload', findEntity, canEdit,
+  function(req, res) {
+    console.log(req.body);
+    res.redirect(req.entity.url());
+  });
+
   // Edit
   app.get('/entities/:id/edit', findEntity, canEdit, function(req, res) {
     res.render('entities/edit');
